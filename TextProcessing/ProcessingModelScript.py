@@ -12,7 +12,7 @@ def tag_train():
 	print("TRAINING DATA\n")
 	
 	print("Importing Train CSV File")
-	train_csv = pd.read_csv("C:\ComputerScience\DeepLearning\GitProjects\\toxicspeechspot\\toxicspeechspot\Data\OriginalData\\train.csv", low_memory = False) #loads data frame using pandas
+	train_csv = pd.read_csv("/home/will/Computerscience/Machinelearning/Projects/Toxicspeechspot/Programdata/train.csv", low_memory = False) #loads data frame using pandas
 
 	print("Training data frames loaded \n")
 
@@ -25,7 +25,7 @@ def tag_train():
 	tagged = []
 	tagged_len = int
 
-	print("Text preprocessing started:")
+	print("Text preprocessing started (training):")
 
 	for i in range (0,rows):         
 	   
@@ -44,7 +44,7 @@ def tag_train():
 
 	print("\nText preprocessing finished")
 
-	train_csv.to_csv("C:\ComputerScience\DeepLearning\GitProjects\\toxicspeechspot\\toxicspeechspot\Data\\TaggedData\\train_tagged.csv", index = False)  ###writes modified csv to a csv file
+	train_csv.to_csv("/home/will/Computerscience/Machinelearning/Projects/Toxicspeechspot/Programdata/train_tagged.csv", index = False)  ###writes modified csv to a csv file
 	print("TRAINING DATA TAGGING FINISHED")
 	
 def tag_test():
@@ -53,7 +53,7 @@ def tag_test():
 	
 	print("Importing Test CSV File")
 	
-	test_csv = pd.read_csv("C:\ComputerScience\DeepLearning\GitProjects\\toxicspeechspot\\toxicspeechspot\Data\OriginalData\\test.csv", low_memory = False) ##loads data frame using pandas
+	test_csv = pd.read_csv("/home/will/Computerscience/Machinelearning/Projects/Toxicspeechspot/Programdata/test.csv", low_memory = False) ##loads data frame using pandas
 
 	print("Testing data frames loaded \n")
 
@@ -66,7 +66,7 @@ def tag_test():
 	tagged = []
 	tagged_len = int
 
-	print("Text preprocessing started:")
+	print("Text preprocessing started (testing):")
 
 	for i in range (0,rows):         
 		
@@ -84,7 +84,7 @@ def tag_test():
 
 	print("\nText preprocessing finished")
 
-	test_csv.to_csv("C:\ComputerScience\DeepLearning\GitProjects\\toxicspeechspot\\toxicspeechspot\Data\\TaggedData\\test_tagged.csv", index = False)  ###writes modified csv to a csv file
+	test_csv.to_csv("/home/will/Computerscience/Machinelearning/Projects/Toxicspeechspot/Programdata/test_tagged.csv", index = False)  ###writes modified csv to a csv file
 	
 	print("TESTING DATA TAGGING FINISHED")
 
