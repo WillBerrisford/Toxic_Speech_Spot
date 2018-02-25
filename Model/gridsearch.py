@@ -28,7 +28,7 @@ def loadparse():
 	###loading raw data
 	#training
 
-	training_data = h2o.import_file("C:\ComputerScience\DeepLearning\GitProjects\\toxicspeechspot\\toxicspeechspot\Data\\TaggedData\\train_tagged.csv")
+	training_data = h2o.import_file("/home/will/Computerscience/Machinelearning/Projects/Toxicspeechspot/Programdata/train_tagged.csv")
 
 	print("Training CSV file imported successfully")
 
@@ -39,7 +39,7 @@ def loadparse():
 	print("Frame split correctly")
 
 	#testing
-	testing_data = h2o.import_file("C:\ComputerScience\DeepLearning\GitProjects\\toxicspeechspot\\toxicspeechspot\Data\\TaggedData\\test_tagged.csv")
+	testing_data = h2o.import_file("/home/will/Computerscience/Machinelearning/Projects/Toxicspeechspot/Programdata/test_tagged.csv")
 
 	print("Testing CSV file imported successfully")
 
@@ -116,14 +116,11 @@ def savemodel(toxic_rdf_grid):
 	i = 0
 
 	while written == False:
-		if os.path.exists("C:\ComputerScience\DeepLearning\GitProjects\\toxicspeechspot\\toxicspeechspot\ModelPerformance\model_performance{0}.csv".format(i)) == True:
-			i = i + 1
-		else:
-			model_perf.to_csv("C:\ComputerScience\DeepLearning\GitProjects\\toxicspeechspot\\toxicspeechspot\ModelPerformance\model_performance{0}.csv".format(i))
-			break
-
-
-
+    if os.path.exists("/home/will/Computerscience/Machinelearning/Projects/Toxicspeechspot/Modelperformance/model_performance{0}.csv".format(i)) == True:
+        i = i + 1
+    else:
+        model_perf.to_csv("/home/will/Computerscience/Machinelearning/Projects/Toxicspeechspot/Modelperformance/model_performance{0}.csv".format(i))
+        break
 
 train, valid = loadparse() #sets train and valid using the returned variables from loadparse
 
