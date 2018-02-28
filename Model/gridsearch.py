@@ -93,11 +93,14 @@ def logdata(toxic_rdf_grid, count, final_model_perf):
 		###model performance sorted by logloss
 		final_model_perf = pd.DataFrame(toxic_rdf_grid.sorted_metric_table())  #initialises data frame
 		print(final_model_perf)
+		print(count)
 		
 		
 	else:
-		final_model_perf.append(model_perf, ignore_index=True) #appends new model data
+		
+		final_model_perf = final_model_perf.append(model_perf, ignore_index=True) #appends new model data
 		print(final_model_perf)
+		print(count)
 		
 	return final_model_perf
 
@@ -144,8 +147,8 @@ def run (sample_rate_change, ntrees_change, count, final_model_perf):
 
 def changeparams(sample_rate_change, ntrees_change):
 	
-	sample_rate_range = [0.1,0.2]#,0.3,0.4,0.5,0.6,0.7,0.8,0.9]
-	ntrees_range = [10,20]#,500,1000,2000,3000,4000]
+	sample_rate_range = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]
+	ntrees_range = [10,20,500,1000,2000,3000,4000]
 	
 	criteria = {'strategy': 'RandomDiscrete',
 			   'max_models':1000,
@@ -174,7 +177,7 @@ def iteration():
 	for sr_change in range(0,2):
 		for nt_change in range(0,2):
 			final_model_perf = run(sr_change, nt_change, count, final_model_perf)
-			count = count + 1
+			count =+ 1
 			
 	savedata(final_model_perf) #Writes model to file
 
