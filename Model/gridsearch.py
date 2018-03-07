@@ -10,7 +10,7 @@ import os.path
 ###Removing current instances of H2o and initialising H2o
 
 h2o.init(ip='localhost', nthreads=10,
-					 min_mem_size='1G', max_mem_size='8G')
+					 min_mem_size='1G', max_mem_size='7G')
 h2o.remove_all()
 
 ###Importing H2o
@@ -139,16 +139,14 @@ def run (sample_rate_change, ntrees_change, count, final_model_perf):
 	
 	final_model_perf = logdata(toxic_rdf_grid, count, final_model_perf) #saves model
 	
-	h2o.remove_all()
-	
 	return final_model_perf 
 
 
 
 def changeparams(sample_rate_change, ntrees_change):
 	
-	sample_rate_range = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]
-	ntrees_range = [10,20,500,1000,2000,3000,4000]
+	sample_rate_range = [0.0001,0.0005,0.001,0.005,0.01,0.015,0.02,0.05,0.1,0.2,0.3]
+	ntrees_range = [1000,1250,1500,1750,2000,2250,2500,2750,3000,3250,3500,3750,4000,4250,4500,4750,5000]
 	
 	criteria = {'strategy': 'RandomDiscrete',
 			   'max_models':1000,
@@ -174,9 +172,10 @@ def iteration():
 	count = 0
 	final_model_perf = pd.DataFrame
 	
-	for sr_change in range(0,2):
-		for nt_change in range(0,2):
+	for sr_change in range(0,11):
+		for nt_change in range(0,17):
 			final_model_perf = run(sr_change, nt_change, count, final_model_perf)
+			h2o.remove_all()
 			count =+ 1
 			
 	savedata(final_model_perf) #Writes model to file
