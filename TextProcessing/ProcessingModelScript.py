@@ -43,7 +43,7 @@ def tag(csv, name):
 
 	print("Text preprocessing started:")
 
-	for i in range (0,10):         
+	for i in range (0,rows):         
 	   
 		temp = str(csv.loc[i, 'comment_text'])    ###defines temp as the cell
 		temp_token = word_tokenize(temp)	###tokenizes (splits up sentence into words) words in temp
