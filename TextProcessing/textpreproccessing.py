@@ -5,21 +5,21 @@ import spacy
 import pandas as pd
 
 # loading spacy
-nlp = spacy.load('en')
+nlp = spacy.load('en_core_web_lg')
 
 # importing training data
 training_data_untagged = pd.read_csv(
     "/home/will/Computerscience/Machinelearning/Projects/Toxicspeechspot/Programdata/train.csv")
 train_name = ("train_tagged")
 
-print("Training data has been loaded")
+print("\nTraining data has been loaded")
 
 # importing testing data
 testing_data_untagged = pd.read_csv(
     "/home/will/Computerscience/Machinelearning/Projects/Toxicspeechspot/Programdata/test.csv")
 test_name = ("test_tagged")
 
-print("Testing data has been loaded")
+print("\nTesting data has been loaded")
 
 # text processing
 
@@ -27,28 +27,58 @@ print("Testing data has been loaded")
 def tagging(csv, name):
     shape = csv.shape  # dimensions of the data frame
     rows = int(shape[0]) - 1  # gets number of rows
+    start = 0
+    end = 5000
+    completed = False
 
-    for row in range(0, rows):
+    while completed != True:
 
-        # temp is a string from data frame
-        cell_string = str(csv.loc[row, 'comment_text'])
-        print("Cell_string:{0}".format(getsizeof(cell_string)))
+        new_csv = pd.DataFrame(columns=['word_vectors', 'toxic', 'severe_toxic', 'obscene', 'threat', 'insult', 'identity_hate'])
 
-        cell_string_tagged = nlp(cell_string)
-        print("Cell_string_tagged:{0}".format(getsizeof(cell_string_tagged)))
+        for row in range(start, end):
 
-        cell_tagged_len = int(len(cell_string_tagged))
-        print("Cell_tagged_len:{0}".format(getsizeof(cell_tagged_len)))
+            comment_text = str(csv.loc[row, 'comment_text'])
+            toxic = int(csv.loc[row, 'toxic'])
+            severe_toxic = int(csv.loc[row, 'severe_toxic'])
+            obscene = int(csv.loc[row, 'obscene'])
+            threat = int(csv.loc[row, 'threat'])
+            insult = int(csv.loc[row, 'insult'])
+            identity_hate = int(csv.loc[row, 'identity_hate'])
+            
+            comment_text = nlp(comment_text)
 
-        csv.at[row, 'comment_text'] = [cell_string_tagged]
-        csv.loc[row, 'tagged_length'] = cell_tagged_len
+            comment_text_vectorised = comment_text.vector
 
-        print("Memory usage is:{0}".format(csv.info(memory_usage='deep'), end="\r"))
-        print("Rows completed: {} / {}    Progress {:2.1%}".format(row,
-                                                                   rows, row / rows), end="\r")  # prints progress of processing
-    csv.to_csv(
-        "/home/will/Computerscience/Machinelearning/Projects/Toxicspeechspot/Programdata/{0}.csv".format(name),
-        index=False)  # writes csv to file
+            new_csv.at[row, 'word_vectors'] = [comment_text_vectorised]
+            new_csv.at[row, 'toxic'] = [toxic]
+            new_csv.at[row, 'severe_toxic'] = [severe_toxic]
+            new_csv.at[row, 'obscene'] = [obscene]
+            new_csv.at[row, 'threat'] = [threat]
+            new_csv.at[row, 'insult'] = [insult]
+            new_csv.at[row, 'identity_hate'] = [identity_hate]
+
+            print("Rows completed: {} / {}    Progress {:2.1%}".format((row), end,
+                                                                       (row - start) / (end - start), end="\r"))  # prints progress of processing
+
+        new_csv.to_csv(
+            "/home/will/Computerscience/Machinelearning/Projects/Toxicspeechspot/Programdata/{0}/{0}_rows_{1}_to_{2}.csv".format(
+                name,
+                start,
+                end),
+            index=False)  # writes csv to file
+
+        print("\nRows {0} to {1} completed".format(start, end))
+
+        start = end
+        end += 5000
+        
+        if start == rows:
+            completed = True
+
+        if end > rows:
+            end = rows
+        
+
 
 
 
