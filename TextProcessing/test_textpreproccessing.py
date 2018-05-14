@@ -35,7 +35,7 @@ def iterate(csv_df, name):
 
     while completed != True:
 
-        df = csv_df[start:rows]
+        df = csv_df[start:1]
 
         df['comment_text'] = df['comment_text'].apply(lambda text: list(map(float,(nlp(str(text))).vector.tolist()))) #vectorises text
         print("\n",df.head())
@@ -46,6 +46,8 @@ def iterate(csv_df, name):
 
         start = end
         end += 3000
+
+        completed = True
         
         if start == rows:
             completed = True #ends once all rows are completed
@@ -54,7 +56,7 @@ def iterate(csv_df, name):
             end = rows
 
     csv_df.to_csv(
-            "/home/will/Computerscience/Machinelearning/Projects/Toxicspeechspot/Programdata/{0}.csv".format(
+            "/home/will/Computerscience/Machinelearning/Projects/Toxicspeechspot/Programdata/{0}_test.csv".format(
                 name,
                 str(start),
                 str(end)),
