@@ -1,5 +1,4 @@
 # importing modules
-
 import spacy
 import pandas as pd
 
@@ -37,7 +36,7 @@ def iterate(csv_df, name):
 
         df = csv_df[start:rows]
 
-        df['comment_text'] = df['comment_text'].apply(lambda text: list(map(float,(nlp(str(text))).vector.tolist()))) #vectorises text
+        df['comment_text'] = df['comment_text'].apply(lambda text: (nlp(str(text))).vector) #vectorises text
         print("\n",df.head())
         print("\ndf.head",csv_df.head())
         print("\ndf.tail",csv_df.tail())
