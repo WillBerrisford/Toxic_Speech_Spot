@@ -10,7 +10,7 @@ import os.path
 # Removing current instances of H2o and initialising H2o
 
 h2o.init(ip='localhost', nthreads=10,
-         min_mem_size='1G', max_mem_size='7G')
+         min_mem_size='1G', max_mem_size='8G')
 h2o.remove_all()
 
 # Importing H2o
